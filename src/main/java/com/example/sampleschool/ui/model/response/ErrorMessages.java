@@ -14,6 +14,7 @@ public enum ErrorMessages {
     SUBJECT_TYPE_ERROR("Select one subject: MATHS, ENGLISH, ENTREPRENEUR, PHYSICS, CHEMISTRY, COMPUTER, " +
             "BIOLOGY, FINE ARTS, GOVERNMENT, ECONOMICS, COMMERCE"),
     NO_AWARD_FOUND("No award found."),
+    MISMATCH_RECORD("This award does not belong to this student."),
     NO_RECORD_FOUND("No record found.");
 
 

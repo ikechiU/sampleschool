@@ -54,18 +54,26 @@ public class AwardServiceImpl implements AwardService {
 
     @Override
     public AwardDto getAward(String regNo, String awardId) {
-        checkStudentEntity(regNo);
+        StudentEntity studentEntity = checkStudentEntity(regNo);
 
         AwardEntity awardEntity = checkAwardEntity(awardId);
+
+        if (studentEntity != awardEntity.getStudentEntity()){
+            throw new SchoolServiceException(ErrorMessages.MISMATCH_RECORD.getErrorMessage());
+        }
 
         return new ModelMapper().map(awardEntity, AwardDto.class);
     }
 
     @Override
     public AwardDto updateAward(String regNo, String awardId, AwardDto awardDto) {
-        checkStudentEntity(regNo);
+        StudentEntity studentEntity = checkStudentEntity(regNo);
 
         AwardEntity awardEntity = checkAwardEntity(awardId);
+
+        if (studentEntity != awardEntity.getStudentEntity()){
+            throw new SchoolServiceException(ErrorMessages.MISMATCH_RECORD.getErrorMessage());
+        }
 
         ModelMapper modelMapper = new ModelMapper();
 
@@ -93,9 +101,13 @@ public class AwardServiceImpl implements AwardService {
 
     @Override
     public void deleteAward(String regNo,String awardId) {
-        checkStudentEntity(regNo);
+        StudentEntity studentEntity = checkStudentEntity(regNo);
 
         AwardEntity awardEntity = checkAwardEntity(awardId);
+
+        if (studentEntity != awardEntity.getStudentEntity()){
+            throw new SchoolServiceException(ErrorMessages.MISMATCH_RECORD.getErrorMessage());
+        }
 
         awardRepository.delete(awardEntity);
     }
