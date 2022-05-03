@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationController {
 
-    @Operation(summary = "HTTP POST Web Service Endpoint to login. Supply EMAIL or ID with your PASSWORD to login.")
+    @Operation(summary = "LOGIN. Login as a student or teacher. Check guide above.")
     @ApiOperation("Student-Teacher login")
     @ApiResponses(value = {
             @ApiResponse(code = 200,

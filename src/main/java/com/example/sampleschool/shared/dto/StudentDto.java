@@ -4,6 +4,7 @@ package com.example.sampleschool.shared.dto;
 import com.example.sampleschool.ui.model.response.AwardRest;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class StudentDto implements Serializable {
     private String role;
     private String password;
     private List<String> subjectTeachers;
+    private Timestamp timestamp;
     private String encryptedPassword;
     private String emailVerificationToken;
     private Boolean emailVerificationStatus = false;
@@ -147,6 +149,14 @@ public class StudentDto implements Serializable {
 
     public void setTeacherDto(TeacherDto teacherDto) {
         this.teacherDto = teacherDto;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public List<AwardRest> getAwardRest() {

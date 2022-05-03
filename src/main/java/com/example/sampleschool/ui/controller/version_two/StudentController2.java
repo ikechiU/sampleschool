@@ -1,4 +1,4 @@
-package com.example.sampleschool.ui.controller;
+package com.example.sampleschool.ui.controller.version_two;
 
 import com.example.sampleschool.exceptions.SchoolServiceException;
 import com.example.sampleschool.service.AwardService;
@@ -7,8 +7,11 @@ import com.example.sampleschool.service.TeacherService;
 import com.example.sampleschool.shared.Utils;
 import com.example.sampleschool.shared.dto.AwardDto;
 import com.example.sampleschool.shared.dto.StudentDto;
-import com.example.sampleschool.ui.model.request.*;
+import com.example.sampleschool.ui.model.request.AwardRequest;
+import com.example.sampleschool.ui.model.request.StudentRequest;
+import com.example.sampleschool.ui.model.request.UpdateRequest;
 import com.example.sampleschool.ui.model.response.*;
+import com.example.sampleschool.ui.model.response.version_two.StudentRest2;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,7 +20,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sample-school")
-public class StudentController {
+@RequestMapping("v2/sample-school")
+public class StudentController2 {
 
     @Autowired
     StudentService studentService;
@@ -45,8 +47,8 @@ public class StudentController {
     @Operation(summary = "CREATE A STUDENT.")
     @PostMapping(path = "/students", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public StudentRest createStudent(@RequestBody StudentRequest studentRequest) {
-        StudentRest returnValue = new StudentRest();
+    public StudentRest2 createStudent(@RequestBody StudentRequest studentRequest) {
+        StudentRest2 returnValue = new StudentRest2();
 
         if (studentRequest.getFirstname().isEmpty() || studentRequest.getLastname().isEmpty() ||
                 studentRequest.getCourse().isEmpty() || studentRequest.getAddress().isEmpty() ||
@@ -74,7 +76,7 @@ public class StudentController {
         StudentDto studentDto = modelMapper.map(studentRequest, StudentDto.class);
 
         StudentDto student = studentService.createStudent(studentDto);
-        returnValue = modelMapper.map(student, StudentRest.class);
+        returnValue = modelMapper.map(student, StudentRest2.class);
 
         return returnValue;
     }
@@ -87,11 +89,11 @@ public class StudentController {
     @Operation(summary = "GET A STUDENT. Supply student registration number. This action must be authorized.", security = @SecurityRequirement(name = "bearerAuth"),
             description = "${studentController.GetStudent.ApiOperation.Notes}" )
     @GetMapping(path = "/students/{regNo}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public StudentRest getStudent(@PathVariable String regNo) {
+    public StudentRest2 getStudent(@PathVariable String regNo) {
 
         StudentDto student = studentService.getStudent(regNo);
 
-        return new ModelMapper().map(student, StudentRest.class);
+        return new ModelMapper().map(student, StudentRest2.class);
     }
 
 
@@ -104,14 +106,14 @@ public class StudentController {
     @PutMapping(path = "/students/{regNo}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public StudentRest updateStudent(@PathVariable String regNo, @RequestBody UpdateRequest updateRequest) {
+    public StudentRest2 updateStudent(@PathVariable String regNo, @RequestBody UpdateRequest updateRequest) {
 
         StudentDto studentDto = new StudentDto();
         studentDto = new ModelMapper().map(updateRequest, StudentDto.class);
 
         StudentDto student = studentService.updateStudent(regNo, studentDto);
 
-        return new ModelMapper().map(student, StudentRest.class);
+        return new ModelMapper().map(student, StudentRest2.class);
     }
 
     @ApiImplicitParams({
@@ -121,19 +123,19 @@ public class StudentController {
     @Operation(summary = "GET LIST OF STUDENTS. This action must be authorized.", security = @SecurityRequirement(name = "bearerAuth"),
             description = "${studentController.GetStudent.ApiOperation.Notes}" )
     @GetMapping(path = "/students", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public List<StudentRest> getStudents(@RequestParam(value = "page", defaultValue = "0") int page,
-                                         @RequestParam(value = "limit", defaultValue = "10") int limit,
-                                         @RequestParam(value = "course", defaultValue = "") String course) {
+    public List<StudentRest2> getStudents(@RequestParam(value = "page", defaultValue = "0") int page,
+                                          @RequestParam(value = "limit", defaultValue = "10") int limit,
+                                          @RequestParam(value = "course", defaultValue = "") String course) {
 
         if (!course.trim().isEmpty()){
             course = utils.getUpperCaseText(course.trim());
         }
 
-        List<StudentRest> returnValue;
+        List<StudentRest2> returnValue;
 
         List<StudentDto> students = studentService.getStudents(page, limit, course);
 
-        Type listType = new TypeToken<List<StudentRest>>() {}.getType();
+        Type listType = new TypeToken<List<StudentRest2>>() {}.getType();
         returnValue = new ModelMapper().map(students, listType);
 
         return returnValue;

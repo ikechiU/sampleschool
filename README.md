@@ -14,6 +14,7 @@ This is a simple RESTful Web Service with Spring Boot - Demonstrating a school w
 * Roles and authorities implementation.
 * Swagger Configuration.
 * Amazon SES application during email verification and password reset request.
+* Flyway for database migration.
 
 ## Prerequisite
 To build this project, you require:

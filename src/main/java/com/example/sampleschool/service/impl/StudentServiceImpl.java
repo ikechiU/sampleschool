@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Type;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -78,6 +80,7 @@ public class StudentServiceImpl implements StudentService {
         studentEntity.setEncryptedPassword(studentDto.getPassword());
         studentEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(studentDto.getPassword()));
         studentEntity.setEmailVerificationToken(utils.generateEmailVerificationToken(regNo));
+        studentEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
         // Set roles
         Collection<RolesEntity> roleEntities = new HashSet<>();
@@ -139,7 +142,7 @@ public class StudentServiceImpl implements StudentService {
         List<StudentEntity> entityList;
 
         if (page > 0) page = page - 1;
-        Pageable pageableRequest = PageRequest.of(page, limit);
+        Pageable pageableRequest = PageRequest.of(page, limit, Sort.by("timestamp").descending());
         Page<StudentEntity> studentEntities;
 
         if (course.isEmpty()) {

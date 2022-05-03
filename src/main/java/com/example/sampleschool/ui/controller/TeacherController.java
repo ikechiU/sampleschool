@@ -40,7 +40,7 @@ public class TeacherController {
     @Autowired Utils utils;
 
 
-    @Operation(summary = "HTTP POST Web Service Endpoint to create a teacher profile it returns a TeacherRest response.")
+    @Operation(summary = "CREATE A TEACHER.")
     @PostMapping(path = "/teacher", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public TeacherRest createTeacher(@RequestBody TeacherRequest teacherRequest) {
@@ -74,7 +74,7 @@ public class TeacherController {
             @ApiImplicitParam(name="authorization", value="${teacherController.authorizationHeader.description}", paramType="header",
                     required = true)
     })
-    @Operation(summary = "HTTP GET Web Service Endpoint to get a single teacher detail (TeacherRest)", security = @SecurityRequirement(name = "bearerAuth"),
+    @Operation(summary = "GET A TEACHER. Supply teacher Id. This action must be authorized.", security = @SecurityRequirement(name = "bearerAuth"),
             description = "${teacherController.GetTeacher.ApiOperation.Notes}" )
     @GetMapping(path = "/teacher/{teacherId}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public TeacherRest getTeacher(@PathVariable String teacherId) {
@@ -89,7 +89,7 @@ public class TeacherController {
             @ApiImplicitParam(name="authorization", value="${teacherController.authorizationHeader.description}", paramType="header",
                     required = true)
     })
-    @Operation(summary = "HTTP PUT Web Service Endpoint to update a single teacher detail.", security = @SecurityRequirement(name = "bearerAuth"),
+    @Operation(summary = "UPDATE A TEACHER. Supply teacher Id and teacher details to be updated. This action must be authorized.", security = @SecurityRequirement(name = "bearerAuth"),
             description = "${teacherController.GetTeacher.ApiOperation.Notes}" )
     @PutMapping(path = "/teacher/{teacherId}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
@@ -109,7 +109,7 @@ public class TeacherController {
             @ApiImplicitParam(name="authorization", value="${teacherController.authorizationHeader.description}", paramType="header",
                     required = true)
     })
-    @Operation(summary = "HTTP GET Web Service Endpoint to get a list of teachers List<TeacherRest>", security = @SecurityRequirement(name = "bearerAuth"),
+    @Operation(summary = "GET LIST OF TEACHERS. This action must be authorized.", security = @SecurityRequirement(name = "bearerAuth"),
             description = "${teacherController.GetTeacher.ApiOperation.Notes}" )
     @GetMapping(path = "/teacher", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public List<TeacherRest> getTeachers(@RequestParam(value = "page", defaultValue = "0") int page,
@@ -129,7 +129,7 @@ public class TeacherController {
             @ApiImplicitParam(name="authorization", value="${teacherController.authorizationHeader.description}", paramType="header",
                     required = true)
     })
-    @Operation(summary = "HTTP DELETE Web Service Endpoint to delete a teacher detail. Only an admin perform this action", security = @SecurityRequirement(name = "bearerAuth"),
+    @Operation(summary = "DELETE A TEACHER. Supply teacher Id. This action must be authorized. Only an admin perform this action", security = @SecurityRequirement(name = "bearerAuth"),
             description = "${teacherController.DeleteStudent.ApiOperation.Notes}" )
     @Secured("ROLE_ADMIN")
     @DeleteMapping(path = "/teacher/{teacherId}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})

@@ -12,6 +12,9 @@ import com.example.sampleschool.shared.dto.AwardDto;
 import com.example.sampleschool.ui.model.response.ErrorMessages;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -91,8 +94,12 @@ public class AwardServiceImpl implements AwardService {
 
         StudentEntity studentEntity = checkStudentEntity(regNo);
 
-        Iterable<AwardEntity> awardEntities = awardRepository.findAllByStudentEntityOrderByYearDesc(studentEntity);
-        for (AwardEntity awardEntity : awardEntities) {
+        if (page > 0) page = page - 1;
+        Pageable pageableRequest = PageRequest.of(page, limit);
+        Page<AwardEntity> pagedAwardEntities = awardRepository.findAllByStudentEntityOrderByYearDesc(studentEntity, pageableRequest);
+
+        List<AwardEntity> entityList = pagedAwardEntities.getContent();
+        for (AwardEntity awardEntity : entityList) {
             returnValue.add(new ModelMapper().map(awardEntity, AwardDto.class));
         }
 

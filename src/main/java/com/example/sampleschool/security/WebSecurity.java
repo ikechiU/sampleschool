@@ -47,6 +47,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, SecurityConstants.REGISTER_STUDENT)
                 .permitAll()
+                .antMatchers(HttpMethod.POST, SecurityConstants.REGISTER_STUDENT2)
+                .permitAll()
                 .antMatchers(HttpMethod.POST, SecurityConstants.REGISTER_TEACHER)
                 .permitAll()
                 .antMatchers(HttpMethod.GET, SecurityConstants.EMAIL_VERIFICATION_URL)

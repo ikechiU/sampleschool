@@ -19,7 +19,7 @@ import java.util.List;
 public class SwaggerConfig {
     Contact contact = new Contact(
             "Ikechi Ucheagwu",
-            "https://iykeafrica.github.io/",
+            "https://ikechiu.github.io/",
             "ikechi@hotmail.com"
     );
 
@@ -27,18 +27,20 @@ public class SwaggerConfig {
 
     ApiInfo apiInfo = new ApiInfo(
             "A Sample School RESTful Web Service documentation.",
-            "This pages documents Sample School app RESTful Web Service endpoints." +
+            "This pages documents Sample School app RESTful Web Service endpoints.\n\n\n" +
 
-                    "<h4>******TEST CREDENTIAL******</h4>" +
-                    "EMAIL: &nbsp; <b>super.write@school.com</b> \n" +
-                    "ID: &nbsp; <b>T2022939285465215033</b>\n" +
-                    "PASSWORD: &nbsp; <b>123456789</b>" +
+                    "******<u>TEST CREDENTIAL</u>******\n" +
+                    "email: <b>super.write@school.com</b> \n" +
+                    "teacherId: <b>T2022939285465215033</b>\n" +
+                    "password: <b>123456789</b>\n\n\n" +
 
-                    "<h4>******LOGIN******</h4>" +
-                    "You can Login with either:&nbsp;&nbsp; EMAIL and PASSWORD &nbsp;&nbsp; or  &nbsp;&nbsp;  ID and PASSWORD" +
+                    "******<u>CREATE AN ACCOUNT</u>******\n" +
+                    "Create a student account with a valid email.\n" +
+                    "<b>Check your inbox or spam for registration confirmation mail.</b>\n\n\n" +
 
-                    "<h4>******CREATE AN ACCOUNT******</h4>" +
-            "When you create a student account <b><u>please note: &nbsp; you will need to confirm the email address before you can login &nbsp; (check your inbox or spam for registration confirmation mail.)</u></b>",
+                    "******<u>LOGIN</u>******\n" +
+                    "email and password &nbsp; or &nbsp; teacherId and password &nbsp; or &nbsp; regNo and password\n" +
+                    "<b>All created accounts must be verified before login.</b>",
             "1.0",
             "http://www.appsdeveloperblog.com/service.html",
             contact,

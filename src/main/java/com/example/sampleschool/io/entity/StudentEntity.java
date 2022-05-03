@@ -1,8 +1,11 @@
 package com.example.sampleschool.io.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +27,9 @@ public class StudentEntity implements Serializable {
     @Column(nullable = false) private String encryptedPassword;
     private String emailVerificationToken;
     @Column(nullable = false) private Boolean emailVerificationStatus = false;
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS, timezone = UTC")
+    @CreationTimestamp
+    @Column private Timestamp timestamp;
     @OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL) private List<AwardEntity> awardEntity;
 
     @ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
@@ -126,6 +132,14 @@ public class StudentEntity implements Serializable {
 
     public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
         this.emailVerificationStatus = emailVerificationStatus;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public List<AwardEntity> getAwardEntity() {

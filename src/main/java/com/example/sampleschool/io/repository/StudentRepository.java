@@ -20,6 +20,7 @@ public interface StudentRepository extends PagingAndSortingRepository<StudentEnt
     @Query(value = "SELECT * from student_tb s WHERE s.course = :course", nativeQuery = true)
     List<StudentEntity> findAllByCourse(@Param("course") String course);
 
+//    @Query(value = "SELECT * from student_tb s WHERE s.course LIKE :course", nativeQuery = true)
     @Query(value = "SELECT * FROM student_tb s WHERE s.course LIKE '%:course%'", nativeQuery = true)
     Page<StudentEntity> findAllByCourseLike(@Param("course") String course, Pageable pageable);
 
